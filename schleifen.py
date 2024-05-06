@@ -8,7 +8,9 @@ def calculate_sum(n: int) -> str:
     Returns:
         str: A formatted string representing the sum of numbers from 1 to n.
     """
-    sum_of_numbers = sum(range(1, n + 1))
+    sum_of_numbers = 0
+    for i in range(1, n + 1):
+        sum_of_numbers += i
     result = f"Summe von 1 bis {n}: {sum_of_numbers}"
     return result
 
