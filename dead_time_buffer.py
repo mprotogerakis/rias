@@ -1,56 +1,42 @@
-from collections import deque
+# https://wokwi.com/projects/397260102775130113
+from machine import ADC, Pin
 import time
-#programmiere eine Klasse in python die ein totzeitgleid implementiert. dazu sollen parameter über eine methode entgegengenommen werden und zusammen mit der aktuellen zeit in einer fifo-liste abgelegt werden. nachdem eine im konstruktor konfigurierbare totzeit verstrichen ist sollen die werte dann über eine andere methode wieder abgerufen werden. solange die totzeit initial noch nicht vorüber ist, also noch keine daten vorliegen soll der wert 0 ausgegeben werden.
 
 
 class DeadTimeBuffer:
-    def __init__(self, dead_time):
-        self.dead_time = dead_time  # Totzeit in Sekunden
-        self.buffer = deque()
+    def __init__(self, dead_time_ms):
+        self.dead_time_ms = dead_time_ms  # Totzeit in Millisekunden
+        self.buffer = []  # Initialisiere eine leere Liste als Buffer
 
     def update(self, value):
-        current_time = time.time()
+        current_time = time.ticks_ms()
+        # Füge das neue Wert-Zeit-Paar am Ende des Buffers hinzu
         self.buffer.append((current_time, value))
-        self._cleanup_buffer()
-
-    def _cleanup_buffer(self):
-        current_time = time.time()
-        while len(self.buffer) > 1 and current_time - self.buffer[1][0] >= self.dead_time:
-            self.buffer.popleft()
-
+      
     def retrieve(self):
-        current_time = time.time()
-        valid_values = [val for time_val, val in self.buffer if current_time - time_val >= self.dead_time]
+        current_time = time.ticks_ms()
+        # Filtere alle Werte, deren Zeitstempel mindestens die Totzeit zurückliegt
+        valid_values = [val for (time_val, val) in self.buffer if current_time - time_val >= self.dead_time_ms]
         if valid_values:
+            # Lösche unbenötigte Werte
+            self.buffer = [(time_val, val) for (time_val, val) in self.buffer if current_time - time_val < self.dead_time_ms]
             return valid_values[-1]  # Gib den neuesten gültigen Wert zurück
         else:
             return 0  # Gib 0 zurück, wenn keine gültigen Werte vorliegen
 
+# Konfiguration der Pins (abhängig von deiner spezifischen Hardware)
+adc = ADC(Pin(26))  # Konfiguriere ADC auf Pin 26
+
 # Beispiel-Nutzung
-if __name__ == "__main__":
-    buffer = DeadTimeBuffer(dead_time=5)  # Totzeit von 5 Sekunden
+buffer = DeadTimeBuffer(dead_time_ms=5000)  # Totzeit von 5000 Millisekunden
 
-    # Werte aktualisieren
-    buffer.update(10)
-    buffer.update(20)
+time.sleep(0.1)  # Kurze Pause für Stabilität
+while True:
+    # Lese den analogen Wert
+    value = adc.read_u16()
+    buffer.update(value)
 
-    # Warten bis Totzeit abgelaufen ist
-    time.sleep(6)
-
-    # Wert abrufen
-    print(buffer.retrieve())  # Sollte 20 ausgeben
-
-    # Wert aktualisieren
-    buffer.update(30)
-
-    # Warten bis Totzeit abgelaufen ist
-    time.sleep(3)
-
-    # Wert abrufen
-    print(buffer.retrieve())  # Sollte 20 ausgeben, da Totzeit des zweiten Werts noch nicht abgelaufen ist
-
-    # Warten bis Totzeit abgelaufen ist
-    time.sleep(3)
-
-    # Wert abrufen
-    print(buffer.retrieve())  # Sollte 30 ausgeben
+    # Gib den verarbeiteten Wert aus
+    output_value = buffer.retrieve()
+    print("Ausgegebener Wert:", output_value)
+    time.sleep(0.1)  # Kurze Pause für Stabilität
