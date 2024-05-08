@@ -1,13 +1,14 @@
 # Importieren der Pin- und Timer-Klassen aus der machine-Bibliothek
+# https://wokwi.com/projects/397294022953684993
 from machine import Pin, Timer
 
 # Initialisieren eines Pin-Objekts für die LED am Pin 25 im Output-Modus
-led = Pin(25, Pin.OUT)
+led = Pin(10, Pin.OUT)
 
 # Erstellung eines Timer-Objekts zur Steuerung des Blinkintervalls
 zeit = Timer()
 
-def blink():
+def blink(timer):
     """
     Diese Funktion wird aufgerufen, um den Zustand der LED umzuschalten.
     Sie verwendet eine XOR-Operation (`not led.value()`) um den aktuellen
