@@ -13,14 +13,14 @@ class Integrator:
     def set_input(self, input_value):
         current_time = time.time()
         dt = current_time - self.last_update_time
-        self.integral += self.last_input * dt
+        self.integral = self.integral + self.last_input * dt * self.ki
         self.last_input = input_value
         self.last_update_time = current_time
 
     def get_output(self):
         current_time = time.time()
         dt = current_time - self.last_update_time
-        self.integral += self.last_input * dt
+        self.integral = self.integral + self.last_input * dt * self.ki
         self.last_update_time = current_time
         return self.integral
 
@@ -30,20 +30,20 @@ class TestIntegrator(unittest.TestCase):
         self.assertAlmostEqual(integrator.get_output(), 0.0, delta = 0.1)
         integrator.set_input(1)
         time.sleep(1)  # Eine Sekunde warten ->1
-        self.assertAlmostEqual(integrator.get_output(), 1.0, delta = 0.1)  
+        self.assertAlmostEqual(integrator.get_output(), 0.1, delta = 0.1)
         integrator.set_input(2)
         time.sleep(1)  # Eine Sekunde warten ->3
-        self.assertAlmostEqual(integrator.get_output(), 3.0, delta = 0.1)  
+        self.assertAlmostEqual(integrator.get_output(), 0.3, delta = 0.1)
         integrator.set_input(3)
-        self.assertAlmostEqual(integrator.get_output(), 3.0, delta = 0.1)  
+        self.assertAlmostEqual(integrator.get_output(), 0.3, delta = 0.1)
         time.sleep(1)  # Eine Sekunde warten ->6
-        self.assertAlmostEqual(integrator.get_output(), 6.0, delta = 0.1)  
+        self.assertAlmostEqual(integrator.get_output(), 0.6, delta = 0.1)
 
         time.sleep(1)  # Eine Sekunde warten
-        self.assertAlmostEqual(integrator.get_output(), 9.0, delta = 0.1)  
+        self.assertAlmostEqual(integrator.get_output(), 0.9, delta = 0.1)
         integrator.set_input(-1)
         time.sleep(1)  # Eine Sekunde warten
-        self.assertAlmostEqual(integrator.get_output(), 8.0, delta = 0.1)  
+        self.assertAlmostEqual(integrator.get_output(), 0.8, delta = 0.1)
       
 if __name__ == '__main__':
     unittest.main()
