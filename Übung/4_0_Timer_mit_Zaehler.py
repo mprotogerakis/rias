@@ -11,5 +11,5 @@ def counter(value):
 
 timer = Timer(period=1000, mode=Timer.PERIODIC, callback=counter)
 
-While True:
+while True:
     print("Timerzustand : ",count)

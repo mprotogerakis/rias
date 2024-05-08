@@ -5,6 +5,7 @@ Stand 20. Oktober 2023 - Python 3.7 mit MicroPython Extension auf PyBoard ( Pico
 Taster an GP 20
 LED an GP 10
 Kombination aus Interrupt und Timer zum Entprellen des Tasters.
+https://wokwi.com/projects/397293105936129025
 """
 
 # Beispiel von :
@@ -17,7 +18,7 @@ import utime
 # Output 10 für LED
 led = machine.Pin(10, Pin.OUT)
 # Input 20 für Taster
-taster = machine.Pin(20, machine.Pin.IN, machine.Pin.PULL_DOWN)
+taster = machine.Pin(20, machine.Pin.IN, machine.Pin.PULL_UP)
 # Zähler für Betätigung
 gedrueckt = 1
 bisher_gedrueckt = 0
