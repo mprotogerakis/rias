@@ -1,10 +1,10 @@
 import unittest
-import time
 
 class Proportional:
     def __init__(self, k:float):
         self.k :float= k
         self.value :float = 0.0
+        
     def set_input(self, input_value):
         self.value = input_value
 
