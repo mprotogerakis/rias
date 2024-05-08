@@ -10,13 +10,13 @@ Wird Button_1 länger betätigt, als per "entprellzeit" vorgegeben,
 Blinkt LED_1 10 mal kurz auf.
 Statusmeldungen werden in der Konsole ausgegeben.
 Nachteil : Sleep hält main für Millisekunden an -> ineffizient
-https://wokwi.com/projects/397292965999462401
+https://wokwi.com/projects/397293737414864897
 """
 
 from machine import Pin
 import time
 
-taster = Pin(20, Pin.IN)
+taster = Pin(20, Pin.IN, Pin.PULL_UP)
 led = Pin(10, Pin.OUT)
 entprellzeit = 100  # Entprellzeit in ms
 
