@@ -1,50 +1,33 @@
-# https://wokwi.com/projects/397307016234341377
-
-from machine import Pin
-from utime import sleep
-from machine import Pin, PWM
 import uasyncio as asyncio
 
-sleep(0.5)
-print("Hello, Pi Pico!")
-
-
-
-# Konstanten
-k: float = 1.0  # Federkonstante
-dt: float = 0.01  # Zeitschritt in Sekunden
+# Parameter
+k = -1.0   # Konstante in der DGL
+dt = 0.01 # Zeitschrittweite
 
 # Anfangsbedingungen
-x: float = 1.0  # Anfangsposition
-v: float = 0.0  # Anfangsgeschwindigkeit
+x = 1.0   # Anfangsposition
+v = 0.0   # Anfangsgeschwindigkeit
 
-# PWM-Konfiguration
-pwm_pin: Pin = Pin(10, Pin.OUT)
-pwm: PWM = PWM(pwm_pin, freq=1000)
-
-async def simulate() -> None:
+async def euler_step():
     global x, v
     while True:
-        # Euler-Verfahren zur Berechnung der nächsten Werte
-        new_v: float = v - k * x * dt
-        new_x: float = x + v * dt
+        # Euler-Schritt
+        a = k * x
+        x_new = x + v * dt
+        v_new = v + a * dt
+        x, v = x_new, v_new
 
-        # Update der aktuellen Werte
-        x, v = new_x, new_v
-
-        # Konvertiere Position x in einen PWM-Wert (einfaches Beispiel)
-        pwm_value: int = int((x + 1.1) * pow(2,13))  # Skalierung und Offset für PWM
-        print (f"x={pwm_value}")
-        pwm.duty_u16(pwm_value)
-
-        # Warte bis zum nächsten Zeitschritt
+        # Warte für dt Sekunden
         await asyncio.sleep(dt)
 
-async def main() -> None:
-    try:
-        await simulate()
-    finally:
-        pwm.deinit()  # PWM abschalten und aufräumen
+async def main():
+    # Starte den Euler-Solver
+    asyncio.create_task(euler_step())
 
-# Start der asyncio Event-Loop
+    # Weitere Aufgaben können hier hinzugefügt werden
+    while True:
+        print(f"x: {x}, v: {v}")
+        await asyncio.sleep(1)
+
+# Starte das Programm
 asyncio.run(main())
