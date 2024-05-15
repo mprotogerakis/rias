@@ -17,7 +17,6 @@ class Proportional(SISO):
     def __init__(self, kp, get_time_callback):
         super().__init__(get_time_callback)
         self.kp = kp
-        self.input_value = 0
 
     def set_input(self, input_value):
         self.input_value = input_value
