@@ -13,7 +13,7 @@
 - Projektierung auf PLCnext
 - Übung: fup_2_XOR_logic
 - Codesys Debuggen
-- Codesys Traces
+- Codesys Traces: https://www.realpars.com/blog/codesys-traces
 - WebVisu von Codesys nutzen
 - Übung: st_1_TON_blink_led, fup_1_TON_blink_led
 
