@@ -1,0 +1,16 @@
+PROGRAM fup_1_1_diy_blinker_test
+VAR
+	temp: st_1_DIY_BLINKER;
+	led_out: BOOL;
+END_VAR
+
+
+     +----------------------+
+     |        temp          |
+     | +------------------+ |
+     | | st_1_DIY_BLINKER | |
+     | |                  | |
+TRUE +-| EN           ENO |-+ 
+T#1S +-| BlinkInterval   Q |-+ led_out
+     | +------------------+ |
+     +----------------------+

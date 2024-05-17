@@ -1,0 +1,28 @@
+PROGRAM fup_2_XOR_logic
+// Erstellen Sie ein Programm fup_2_logic in FUP dass mit Hilfe von AND und OR-Bausteinen ein XOR nachbildet. 
+// Visualisieren Sie diese mit einer WebVisu in Codesys
+VAR
+	a: BOOL;
+	b: BOOL;
+	c: BOOL;
+	res: BOOL;
+END_VAR
+
+
+    +-------+       +------+
+    |  AND  |       |  OR  |
+    |   &   |------>|  >=1 |------> res
+    |       |       |      |
+ a o|       |       |      |
+ b -|       |       |      |
+    +-------+       |      |
+                    |      |
+                    c------|
+
+    +-------+
+    |  AND  |
+    |   &   |------> c
+    |       |
+ a o|       |
+ b -|       |
+    +-------+

@@ -1,0 +1,27 @@
+PROGRAM fup_1_TON_blink_led
+VAR
+    T2: TON;
+    T1: TON;
+    LED: BOOL;
+    T2_OUT: BOOL;
+END_VAR
+
+      +-----------+
+      |    T1     |
+      |  +-----+  |
+      |  | TON |  |
+      |  |     |  |
+T2_OUT o-| IN  Q |-- LED
+  T#1S  -| PT ET |-- □
+      |  +-----+  |
+      +-----------+
+
+      +-----------+
+      |    T2     |
+      |  +-----+  |
+      |  | TON |  |
+      |  |     |  |
+  LED  o-| IN  Q |-- T2_OUT
+  T#1S  -| PT ET |-- □
+      |  +-----+  |
+      +-----------+
