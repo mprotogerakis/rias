@@ -1,27 +1,74 @@
 PROGRAM fup_1_TON_blink_led
+
 VAR
-    T2: TON;
-    T1: TON;
-    LED: BOOL;
-    T2_OUT: BOOL;
+    T2: TON;       // Timer T2 vom Typ TON (Einschaltverzögerung)
+    T1: TON;       // Timer T1 vom Typ TON (Einschaltverzögerung)
+    LED: BOOL;     // Boolesche Variable zur Steuerung der LED
+    T2_OUT: BOOL;  // Boolesche Variable zum Speichern des Ausgangszustands von Timer T2
 END_VAR
 
+// Diagramm zur Veranschaulichung der Verbindung zwischen den Timern und der LED
+
       +-----------+
-      |    T1     |
+      |    T1     |        // Timer T1
       |  +-----+  |
       |  | TON |  |
       |  |     |  |
-T2_OUT o-| IN  Q |-- LED
-  T#1S  -| PT ET |-- □
+T2_OUT o-| IN  Q |-- LED   // T1 wird durch T2_OUT aktiviert und steuert die LED
+  T#1S  -| PT ET |-- □     // PT (Preset Time) auf 1 Sekunde gesetzt
       |  +-----+  |
       +-----------+
 
       +-----------+
-      |    T2     |
+      |    T2     |        // Timer T2
       |  +-----+  |
       |  | TON |  |
       |  |     |  |
-  LED  o-| IN  Q |-- T2_OUT
-  T#1S  -| PT ET |-- □
+  LED  o-| IN  Q |-- T2_OUT // T2 wird durch den LED-Zustand aktiviert und steuert T2_OUT
+  T#1S  -| PT ET |-- □      // PT (Preset Time) auf 1 Sekunde gesetzt
       |  +-----+  |
       +-----------+
+
+// Initialisierung und Steuerung der Timer
+
+// Timer T1 wird aktiviert, wenn T2_OUT TRUE ist
+// PT wird auf BlinkInterval (1 Sekunde) gesetzt
+T1(IN := T2_OUT, PT := T#1S);
+
+// Steuerung der LED: LED leuchtet, wenn T1's Q TRUE ist
+LED := T1.Q;
+
+// Timer T2 wird aktiviert, wenn LED TRUE ist
+// PT wird auf BlinkInterval (1 Sekunde) gesetzt
+T2(IN := LED, PT := T#1S);
+
+// T2_OUT wird auf den Ausgangszustand von T2 gesetzt
+T2_OUT := T2.Q;
+
+
+Erklärung des Programms
+Variablendeklaration:
+
+T2: Eine Instanz des TON-Timers für die zweite Zeitverzögerung.
+T1: Eine Instanz des TON-Timers für die erste Zeitverzögerung.
+LED: Eine Boolesche Variable, die den Zustand der LED steuert.
+T2_OUT: Eine Boolesche Variable, die den Ausgangszustand von Timer T2 speichert.
+Diagramm zur Veranschaulichung:
+
+Das Diagramm zeigt die Verbindung zwischen den Timern T1 und T2 und der LED.
+T1 wird durch T2_OUT aktiviert und steuert die LED.
+T2 wird durch den LED-Zustand aktiviert und steuert T2_OUT.
+Initialisierung und Steuerung der Timer:
+
+T1(IN := T2_OUT, PT := T#1S);
+T1 wird aktiviert, wenn T2_OUT TRUE ist.
+PT (Preset Time) wird auf 1 Sekunde gesetzt.
+LED := T1.Q;
+Die LED leuchtet, wenn der Ausgang von T1 (Q) TRUE ist.
+T2(IN := LED, PT := T#1S);
+T2 wird aktiviert, wenn LED TRUE ist.
+PT wird auf 1 Sekunde gesetzt.
+T2_OUT := T2.Q;
+T2_OUT wird auf den Ausgangszustand von T2 gesetzt (Q).
+Funktionsweise des Programms
+Das Programm verwendet zwei TON-Timer, um eine LED blinken zu lassen. Der erste Timer T1 wird durch den Ausgang des zweiten Timers T2 gesteuert. Der zweite Timer T2 wird durch den Zustand der LED gesteuert. Dadurch entsteht eine wechselseitige Abhängigkeit, die zu einem regelmäßigen Ein- und Ausschalten der LED führt. Beide Timer haben ein Preset Time (PT) von 1 Sekunde, was bedeutet, dass die LED in einem 1-Sekunden-Takt blinkt.

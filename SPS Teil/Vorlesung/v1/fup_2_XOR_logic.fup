@@ -1,28 +1,45 @@
 PROGRAM fup_2_XOR_logic
-// Erstellen Sie ein Programm fup_2_logic in FUP dass mit Hilfe von AND und OR-Bausteinen ein XOR nachbildet. 
-// Visualisieren Sie diese mit einer WebVisu in Codesys
+// Erstellen Sie ein Programm fup_2_logic in FUP, das mit Hilfe von AND- und OR-Bausteinen ein XOR nachbildet.
+// Visualisieren Sie dies mit einer WebVisu in Codesys.
+
 VAR
-	a: BOOL;
-	b: BOOL;
-	c: BOOL;
-	res: BOOL;
+    a: BOOL;    // Eingangsvariable a
+    b: BOOL;    // Eingangsvariable b
+    c: BOOL;    // Zwischenspeicher c
+    res: BOOL;  // Ergebnis der XOR-Logik
 END_VAR
 
+// Logische Schaltung zur Nachbildung eines XOR-Gatters
 
+    // Erster AND-Baustein
+    // Dieser AND-Baustein wird die Bedingung (a AND b) berechnen
+    +-------+
+    |  AND  |
+    |   &   |------> c       // Ergebnis wird in c gespeichert
+    |       |
+ a o|       |
+ b -|       |
+    +-------+
+
+    // OR-Baustein mit NOT der Eingangsvariablen
+    // Dieser OR-Baustein wird die Bedingung (a OR b) berechnen
     +-------+       +------+
     |  AND  |       |  OR  |
-    |   &   |------>|  >=1 |------> res
+    |   &   |------>|  >=1 |------> res  // Ergebnis wird in res gespeichert
     |       |       |      |
  a o|       |       |      |
  b -|       |       |      |
     +-------+       |      |
                     |      |
-                    c------|
+                    c------|  // Eingang c des OR-Gatters
 
-    +-------+
-    |  AND  |
-    |   &   |------> c
-    |       |
- a o|       |
- b -|       |
-    +-------+
+// Implementierung der XOR-Logik in strukturiertem Text
+
+// Berechnung des Zwischenergebnisses c
+// c ist wahr, wenn a UND b beide wahr sind
+c := a AND b;
+
+// Berechnung des XOR-Ergebnisses res
+// res ist wahr, wenn (a OR b) wahr ist und c (a AND b) falsch ist
+res := (a OR b) AND NOT c;
+

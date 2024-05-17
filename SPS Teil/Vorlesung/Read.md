@@ -14,6 +14,7 @@
 - Übung: fup_2_XOR_logic
 - Codesys Debuggen
 - Codesys Traces
+- WebVisu von Codesys nutzen
 - Übung: st_1_TON_blink_led, fup_1_TON_blink_led
 
 ### Vorlesung v2:

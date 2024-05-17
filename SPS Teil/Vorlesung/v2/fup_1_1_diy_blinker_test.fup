@@ -14,3 +14,50 @@ TRUE +-| EN           ENO |-+
 T#1S +-| BlinkInterval   Q |-+ led_out
      | +------------------+ |
      +----------------------+
+
+
+Der Code verwendet eine Struktur (st_1_DIY_BLINKER), um den Blinker zu steuern, und steuert einen Ausgang (led_out), der vermutlich eine LED repräsentiert. 
+
+PROGRAM fup_1_1_diy_blinker_test: Dies ist die Programmanweisung, die das Programm mit dem Namen fup_1_1_diy_blinker_test definiert.
+VAR: Der VAR-Block definiert Variablen, die in diesem Programm verwendet werden.
+temp: st_1_DIY_BLINKER: temp ist eine Variable vom Typ st_1_DIY_BLINKER. Diese Struktur enthält alle notwendigen Informationen und Funktionen zur Steuerung des Blinkers.
+led_out: BOOL: led_out ist eine Boolesche Variable (entweder TRUE oder FALSE), die den Zustand des LED-Ausgangs repräsentiert.
+
+Funktionsblock st_1_DIY_BLINKER
+
+
+     +----------------------+
+     |        temp          |
+     | +------------------+ |
+     | | st_1_DIY_BLINKER | |
+     | |                  | |
+TRUE +-| EN           ENO |-+ 
+T#1S +-| BlinkInterval   Q |-+ led_out
+     | +------------------+ |
+     +----------------------+
+
+Dies ist eine grafische Darstellung eines Funktionsblocks (FB) in einer Funktionsbausteinsprache (FBS).
+
+temp: Dies zeigt, dass der Funktionsblock st_1_DIY_BLINKER innerhalb der Struktur temp verwendet wird.
+st_1_DIY_BLINKER: Name des Funktionsblocks, der für den DIY-Blinker verwendet wird.
+EN: Enable-Eingang des Funktionsblocks. In diesem Fall ist er mit TRUE verbunden, was bedeutet, dass der Funktionsblock immer aktiviert ist.
+ENO: Enable-Ausgang des Funktionsblocks. Dieser zeigt an, dass der Funktionsblock aktiv ist, wenn er TRUE ist.
+BlinkInterval: Dies ist ein Eingangsparameter des Funktionsblocks, der die Blinkzeit in Sekunden definiert. In diesem Fall ist der Wert auf T#1S gesetzt, was einer Zeitdauer von 1 Sekunde entspricht.
+Q: Ausgang des Funktionsblocks, der den aktuellen Zustand des Blinkers angibt. Dieser Ausgang ist mit der Variablen led_out verbunden.
+
+Die Struktur temp wird initialisiert und stellt alle notwendigen Parameter für den DIY-Blinker bereit.
+
+Der Funktionsblock st_1_DIY_BLINKER ist immer aktiviert, da der Enable-Eingang (EN) auf TRUE gesetzt ist.
+
+Der BlinkInterval ist auf 1 Sekunde gesetzt (T#1S). Dies bedeutet, dass der Blinker jede Sekunde seinen Zustand ändern soll (von ein zu aus und umgekehrt).
+
+Der Ausgang Q des Funktionsblocks gibt den Zustand des Blinkers an und ist mit der Variablen led_out verbunden. Diese Variable steuert wahrscheinlich eine LED, die im Takt des Blinkintervalls blinkt.
+
+Der Code implementiert einen einfachen Blinker mit einer Blinkfrequenz von 1 Sekunde. Der Funktionsblock st_1_DIY_BLINKER wird verwendet, um den Zustand des Blinkers zu steuern, und der Ausgang led_out zeigt an, ob die LED ein- oder ausgeschaltet ist. Da der Funktionsblock immer aktiviert ist und das Blinkintervall auf 1 Sekunde gesetzt ist, blinkt die LED alle 1 Sekunde.
+
+Dieser Code ist nützlich für Anwendungen, bei denen ein einfaches visuelles Signal erforderlich ist, z.B. zur Statusanzeige oder als Warnsignal.
+
+
+
+
+
