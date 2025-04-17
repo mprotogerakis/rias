@@ -14,6 +14,7 @@ def calculate_sum(n: int) -> str:
     result = f"Summe von 1 bis {n}: {sum_of_numbers}"
     return result
 
+
 n = 100
 final_result = calculate_sum(n)
 print(final_result)

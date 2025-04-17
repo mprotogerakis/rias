@@ -20,3 +20,4 @@ print("Fibonacci-Folge:")
 # - Beispiel: wenn die Liste [0, 1, 1, 2, 3, 5, 8] ist und anzahl = 5,
 #   dann wird [0, 1, 1, 2, 3] ausgegeben
 print(fibonacci_folge[:anzahl])
+#print(fibonacci_folge)

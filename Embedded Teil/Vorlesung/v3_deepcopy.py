@@ -1,9 +1,11 @@
 import copy
 
+
 def modify_list(lst):
     lst_copy = copy.deepcopy(lst)
     lst_copy.append(4)
     return lst_copy
+
 
 # Ursprüngliche Liste
 my_list = [1, 2, 3]

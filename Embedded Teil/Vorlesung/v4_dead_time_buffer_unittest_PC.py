@@ -2,6 +2,7 @@
 # Variante für Micropython siehe https://wokwi.com/projects/397260102775130113
 import time
 
+
 class DeadTimeBuffer:
     def __init__(self, dead_time_ms):
         self.dead_time_ms = dead_time_ms  # Totzeit in Millisekunden
@@ -16,12 +17,15 @@ class DeadTimeBuffer:
         valid_values = [val for (time_val, val) in self.buffer if current_time - time_val >= self.dead_time_ms]
         if valid_values:
             # Lösche unbenötigte Werte
-            self.buffer = [(time_val, val) for (time_val, val) in self.buffer if current_time - time_val < self.dead_time_ms]
+            self.buffer = [(time_val, val) for (time_val, val) in self.buffer if
+                           current_time - time_val < self.dead_time_ms]
             return valid_values[-1]  # Gib den neuesten gültigen Wert zurück
         else:
             return 0  # Gib 0 zurück, wenn keine gültigen Werte vorliegen
 
+
 import unittest
+
 
 class TestDeadTimeBuffer(unittest.TestCase):
 
@@ -40,9 +44,10 @@ class TestDeadTimeBuffer(unittest.TestCase):
 
         time.sleep(0.6)
         self.assertEqual(buffer.retrieve(), 200)
-        
-        time.sleep(0.5)  
-        self.assertEqual(buffer.retrieve(), 300)  
+
+        time.sleep(0.5)
+        self.assertEqual(buffer.retrieve(), 300)
+
 
 if __name__ == "__main__":
     unittest.main()

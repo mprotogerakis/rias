@@ -13,6 +13,7 @@ class MyIterator:
         self.index += 1
         return value
 
+
 # Beispielaufruf
 my_list = [1, 2, 3, 4, 5]
 my_iterator = MyIterator(my_list)
